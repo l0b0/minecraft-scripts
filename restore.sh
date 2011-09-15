@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # NAME
-#    restore.sh - Create a backup of your Minecraft main directory
+#    restore.sh - Restore a backup of your Minecraft main directory
 #
 # SYNOPSIS
 #    ./restore.sh
