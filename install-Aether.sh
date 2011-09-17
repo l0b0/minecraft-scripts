@@ -35,9 +35,10 @@
 #
 ################################################################################
 
-"$(dirname -- "$0")/install-ModLoader.sh"
-"$(dirname -- "$0")/install-AudioMod.sh"
-"$(dirname -- "$0")/install-PlayerAPI.sh"
-"$(dirname -- "$0")/install-ShockAhPI.sh"
+directory="$(dirname -- "$0")"
+"${directory}/install-ModLoader.sh"
+"${directory}/install-AudioMod.sh"
+"${directory}/install-PlayerAPI.sh"
+"${directory}/install-ShockAhPI.sh"
 
-"$(dirname -- "$0")/install-mod.sh" http://download663.mediafire.com/5fbrb1dhakzg/fpe2e3oiejbfgl4/Aether1.7.3+V1.02.zip Jar Resources
+"${directory}/install-mod.sh" http://download663.mediafire.com/5fbrb1dhakzg/fpe2e3oiejbfgl4/Aether1.7.3+V1.02.zip Jar Resources

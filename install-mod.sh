@@ -38,7 +38,8 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-. "$(dirname -- "$0")/minecraft-scripts.conf"
+directory="$(dirname -- "$0")"
+. "${directory}/minecraft-scripts.conf"
 
 jar_path="$minecraft_home/bin/minecraft.jar"
 if [[ ! -w "$jar_path" ]]
@@ -47,7 +48,7 @@ then
     exit 1
 fi
 
-"$(dirname -- "$0")/clean-jar.sh" 2>/dev/null || true
+"${directory}/clean-jar.sh" 2>/dev/null || true
 
 tmp_dir="$(mktemp --tmpdir -d -- "$(basename -- "$0")".XXXXXXXX)"
 mod_archive="$tmp_dir"/mod.zip

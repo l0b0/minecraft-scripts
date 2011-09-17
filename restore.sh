@@ -37,7 +37,8 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-. "$(dirname -- "$0")/minecraft-scripts.conf"
+directory="$(dirname -- "$0")"
+. "${directory}/minecraft-scripts.conf"
 
 declare -a backups=( "$minecraft_home"-* )
 last_backup=${backups[@]:(-1)}
@@ -45,7 +46,7 @@ last_backup=${backups[@]:(-1)}
 if [[ -d "$minecraft_home" ]]
 then
     echo "$minecraft_home exist; backing up."
-    "$(dirname -- "$0")/backup.sh"
+    "${directory}/backup.sh"
 fi
 mv -T -- "$last_backup" "$minecraft_home"
 echo "Restored $last_backup"
