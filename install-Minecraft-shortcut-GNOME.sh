@@ -43,6 +43,12 @@ then
     exit 1
 fi
 
+if [[ ! -x "$command" ]]
+then
+    echo "Minecraft command not found. Run install-Minecraft.sh first." >&2
+    exit 1
+fi
+
 wget -O "$icon" "http://www.minecraft.net/favicon.png"
 
 set +o noclobber
