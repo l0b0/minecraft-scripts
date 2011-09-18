@@ -44,32 +44,20 @@ then
     exit 1
 fi
 
-share_path=/usr/share/minecraft
-if [[ ! -d "$share_path" ]]
-then
-    sudo mkdir "$share_path"
-fi
+icon_path="${minecraft_home}/icon.png"
+wget -O "$icon_path" "http://www.minecraft.net/favicon.png"
 
-icon_path="${share_path}/icon.png"
-if [[ ! -f "$icon_path" ]]
-then
-    sudo wget -O "$icon_path" "http://www.minecraft.net/favicon.png"
-fi
-
-shortcut_path="${share_path}/Minecraft-shortcut.desktop"
-shortcut_tmp="$(mktemp)"
+shortcut_path="${minecraft_home}/Minecraft-shortcut.desktop"
 set +o noclobber
 echo "[Desktop Entry]
 Version=1.0
 Type=Application
 Name=Minecraft
 Comment=A game about placing blocks to build anything you can imagine
-Exec=java -Xmx1024M -Xms512M -cp ${minecraft_home}/bin/minecraft.jar net.minecraft.LauncherFrame
+Exec=/usr/local/bin/minecraft
 Icon=$icon_path
 Categories=Game
-Terminal=false
-" > "$shortcut_tmp"
-sudo mv "$shortcut_tmp" "$shortcut_path"
+Terminal=false" > "$shortcut_path"
 set -o noclobber
 
 xdg-desktop-menu install "$shortcut_path"
