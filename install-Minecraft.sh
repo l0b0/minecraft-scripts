@@ -47,3 +47,15 @@ fi
 mkdir -p "$minecraft_home/bin"
 
 wget -O "$minecraft_home/bin/minecraft.jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+
+launcher="${minecraft_home}/minecraft.sh"
+set +o noclobber
+echo "java -Xmx1024M -Xms512M -cp ${home}/bin/minecraft.jar net.minecraft.LauncherFrame" > "$launcher"
+set -o noclobber
+
+sudo ln -fs "$launcher" /usr/local/bin/minecraft
+
+echo "Minecraft is now installed."
+echo "To start it, you can either run the \`minecraft\` command from the shell,"
+echo "or run install-Minecraft-shortcut-GNOME.sh to make it available from the"
+echo "Applications menu."
