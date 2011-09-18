@@ -45,9 +45,9 @@ fi
 
 mkdir -p "$home/bin"
 
-wget -O "$jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+wget -O "$startup_jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
 
-echo "java -Xmx1024M -Xms512M -cp ${jar} net.minecraft.LauncherFrame" > "$launcher"
+echo "java -Xmx1024M -Xms512M -cp ${startup_jar} net.minecraft.LauncherFrame" > "$launcher"
 chmod a+x "$launcher"
 
 sudo ln -fs "$launcher" "$command"
