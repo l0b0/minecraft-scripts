@@ -36,10 +36,16 @@
 ################################################################################
 
 set -o errexit -o noclobber -o nounset -o pipefail
+shopt -s nullglob
 
 . "$(dirname -- "$0")/minecraft-scripts.conf"
 
 declare -a backups=( "$home"-* )
+if [[ ${#backups[@]} -eq 0 ]]
+then
+    echo "No backups available" >&2
+    exit 1
+fi
 last_backup=${backups[@]:(-1)}
 
 if [[ -d "$home" ]]
