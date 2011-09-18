@@ -10,7 +10,7 @@
 #    Moves ~/.minecraft to ~/.minecraft-<datetime>.
 #
 #    If your Minecraft directory for some reason is not in your home directory,
-#    then modify minecraft_home in minecraft-scripts.conf.
+#    then modify "home" in minecraft-scripts.conf.
 #
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
@@ -37,12 +37,12 @@ set -o errexit -o noclobber -o nounset -o pipefail
 
 . "$(dirname -- "$0")/minecraft-scripts.conf"
 
-if [[ ! -d "$minecraft_home" ]]
+if [[ ! -d "$home" ]]
 then
-    echo "$minecraft_home does not exist; did you back it up already?" >&2
+    echo "$home does not exist; did you back it up already?" >&2
     exit 1
 fi
 
-minecraft_backup="${minecraft_home}-$(date +%Y-%m-%dT%H:%M:%S)"
-mv -T -- "$minecraft_home" "$minecraft_backup"
-echo "Moved Minecraft folder to $minecraft_backup"
+backup="${home}-$(date +%Y-%m-%dT%H:%M:%S)"
+mv -T -- "$home" "$backup"
+echo "Moved Minecraft folder to $backup"

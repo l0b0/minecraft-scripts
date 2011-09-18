@@ -12,7 +12,7 @@
 #    for details.
 #
 #    If your Minecraft directory for some reason is not in your home directory,
-#    then modify minecraft_home in minecraft-scripts.conf.
+#    then modify "home" in minecraft-scripts.conf.
 #
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
@@ -35,10 +35,11 @@
 #
 ################################################################################
 
-directory="$(dirname -- "$0")"
-"${directory}/install-ModLoader.sh"
-"${directory}/install-AudioMod.sh"
-"${directory}/install-PlayerAPI.sh"
-"${directory}/install-ShockAhPI.sh"
+. "$(dirname -- "$0")/minecraft-scripts.conf"
 
-"${directory}/install-mod.sh" http://download663.mediafire.com/5fbrb1dhakzg/fpe2e3oiejbfgl4/Aether1.7.3+V1.02.zip Jar Resources
+"${scripts}/install-ModLoader.sh"
+"${scripts}/install-AudioMod.sh"
+"${scripts}/install-PlayerAPI.sh"
+"${scripts}/install-ShockAhPI.sh"
+
+"${scripts}/install-mod.sh" http://download663.mediafire.com/5fbrb1dhakzg/fpe2e3oiejbfgl4/Aether1.7.3+V1.02.zip Jar Resources

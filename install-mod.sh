@@ -13,7 +13,7 @@
 #    files) / resources (default nothing).
 #
 #    If your Minecraft directory for some reason is not in your home directory,
-#    then modify minecraft_home in minecraft-scripts.conf.
+#    then modify "home" in minecraft-scripts.conf.
 #
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
@@ -38,17 +38,15 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-directory="$(dirname -- "$0")"
-. "${directory}/minecraft-scripts.conf"
+. "$(dirname -- "$0")/minecraft-scripts.conf"
 
-jar_path="$minecraft_home/bin/minecraft.jar"
-if [[ ! -w "$jar_path" ]]
+if [[ ! -w "$jar" ]]
 then
-    echo "$jar_path is not writeable." >&2
+    echo "$jar does not exist, or is not writeable." >&2
     exit 1
 fi
 
-"${directory}/clean-jar.sh" 2>/dev/null || true
+"${scripts}/clean-jar.sh" 2>/dev/null || true
 
 tmp_dir="$(mktemp --tmpdir -d -- "$(basename -- "$0")".XXXXXXXX)"
 mod_archive="$tmp_dir"/mod.zip
@@ -57,9 +55,9 @@ build_dir="$tmp_dir"/build
 wget -O "$mod_archive" "$1"
 unzip -d "$build_dir" "$mod_archive"
 cd "$build_dir/${2-}"
-zip -r "$jar_path" *
+zip -r "$jar" *
 if [[ "${3+defined}" = defined ]]
 then
-    cp -rt "$minecraft_home/resources" "$build_dir/${3}"/*
+    cp -rt "$home/resources" "$build_dir/${3}"/*
 fi
 rm -r -- "$tmp_dir"

@@ -10,7 +10,7 @@
 #    Backs up any existing installation and downloads the JAR file.
 #
 #    If your Minecraft directory for some reason is not in your home directory,
-#    then modify minecraft_home in minecraft-scripts.conf.
+#    then modify "home" in minecraft-scripts.conf.
 #
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
@@ -35,25 +35,21 @@
 
 set -o errexit -o noclobber -o nounset -o pipefail
 
-directory="$(dirname -- "$0")"
-. "${directory}/minecraft-scripts.conf"
+. "$(dirname -- "$0")/minecraft-scripts.conf"
 
-if [[ -d "$minecraft_home" ]]
+if [[ -d "$home" ]]
 then
-    echo "$minecraft_home exist; backing up."
-    "${directory}/backup.sh"
+    echo "$home exist; backing up."
+    "${scripts}/backup.sh"
 fi
 
-mkdir -p "$minecraft_home/bin"
+mkdir -p "$home/bin"
 
-wget -O "$minecraft_home/bin/minecraft.jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+wget -O "$jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
 
-launcher="${minecraft_home}/minecraft.sh"
-set +o noclobber
-echo "java -Xmx1024M -Xms512M -cp ${home}/bin/minecraft.jar net.minecraft.LauncherFrame" > "$launcher"
-set -o noclobber
+echo "java -Xmx1024M -Xms512M -cp ${jar} net.minecraft.LauncherFrame" > "$launcher"
 
-sudo ln -fs "$launcher" /usr/local/bin/minecraft
+sudo ln -fs "$launcher" "$command"
 
 echo "Minecraft is now installed."
 echo "To start it, you can either run the \`minecraft\` command from the shell,"

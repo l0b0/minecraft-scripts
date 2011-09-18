@@ -10,7 +10,7 @@
 #    This is necessary to use mods which modify minecraft.jar.
 #
 #    If your Minecraft directory for some reason is not in your home directory,
-#    then modify minecraft_home in minecraft-scripts.conf.
+#    then modify "home" in minecraft-scripts.conf.
 #
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
@@ -37,11 +37,9 @@ set -o errexit -o noclobber -o nounset -o pipefail
 
 . "$(dirname -- "$0")/minecraft-scripts.conf"
 
-jar_path="$minecraft_home/bin/minecraft.jar"
-
-if [[ ! -w "$jar_path" ]]
+if [[ ! -w "$jar" ]]
 then
-    echo "$jar_path is not writeable." >&2
+    echo "$jar does not exist, or is not writeable." >&2
     exit 1
 fi
-zip -d "$jar_path" META-INF/*
+zip -d "$jar" META-INF/*
