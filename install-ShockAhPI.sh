@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
 # NAME
-#    install-mod.sh - Install ShockAhPI r5.1
+#    install-ShockAhPI.sh - Install ShockAhPI r5.1
 #
 # SYNOPSIS
-#    ./install-mod.sh
+#    ./install-ShockAhPI.sh
 #
 # DESCRIPTION
 #    Unknown mod used by Aether.
