@@ -4,7 +4,7 @@
 #    install-mod.sh - Install mod from URL
 #
 # SYNOPSIS
-#    ./install-mod.sh URL [ARCHIVE_DIR] [RESOURCES_DIR]
+#    ./install-mod.sh URL|PATH [ARCHIVE_DIR] [RESOURCES_DIR]
 #
 # DESCRIPTION
 #    Downloads URL (zip archive) and merges the contents with minecraft.jar and
@@ -52,7 +52,12 @@ tmp_dir="$(mktemp --tmpdir -d -- "$(basename -- "$0")".XXXXXXXX)"
 mod_archive="$tmp_dir"/mod.zip
 build_dir="$tmp_dir"/build
 
-wget -O "$mod_archive" "$1"
+if [[ "$1" =~ ^http.* ]]
+then
+    wget -O "$mod_archive" "$1"
+else
+    cp -- "$1" "$mod_archive"
+fi
 unzip -d "$build_dir" "$mod_archive"
 cd "$build_dir/${2-}"
 zip -r "$jar" *
