@@ -33,4 +33,4 @@
 set -o errexit -o noclobber -o nounset -o pipefail
 
 sudo apt-get install sun-java6-jre
-sudo update-java-alternatives -s java-6-sun
+sudo update-java-alternatives --jre -s java-6-sun
