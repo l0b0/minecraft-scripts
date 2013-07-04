@@ -12,8 +12,15 @@
 #        If your Minecraft directory for some reason is not in your home
 #        directory, then modify "home" in minecraft-scripts.conf.
 #
-#        -o
-#               Install old-style (pre-1.6.1) launcher.
+#        -o VERSION
+#               Install old-style (pre-1.6.1) VERSION.
+#
+# EXAMPLES
+#        ./install-Minecraft.sh
+#               Install the latest launcher.
+#
+#        ./install-Minecraft.sh -o 1.4.7
+#               Install the old launcher and Minecraft 1.4.7 content.
 #
 # BUGS
 #        https://github.com/l0b0/minecraft-scripts/issues
@@ -52,6 +59,7 @@ if [[ "${1-}" = '-o' ]]
 then
     # Old launcher
     launcher_url='https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar'
+    content_url="http://assets.minecraft.net/${2//./_}/minecraft.jar"
     launcher_cmd=(java -Xmx1024M -Xms512M -cp "${startup_jar}" net.minecraft.LauncherFrame)
 else
     # New launcher
@@ -66,7 +74,16 @@ chmod a+x "$launcher"
 
 sudo ln -fs "$launcher" "$command"
 
-echo "Minecraft is now installed."
+echo "The Minecraft launcher is now installed."
 echo "To start it, you can either run the \`minecraft\` command from the shell,"
 echo "or run install-Minecraft-shortcut-GNOME.sh to make it available from the"
 echo "Applications menu."
+
+if [[ -n "${content_url-}" ]]
+then
+    cat <<'EOF'
+
+    After logging in, exit Minecraft and run the following command to upgrade to the wanted version:
+EOF
+    echo wget -O "'""$jar""'" "'""$content_url""'"
+fi
