@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # NAME
-#    install-Minecraft.sh - Install Minecraft (who would have though, right?)
+#    install-Minecraft.sh - Install Minecraft
 #
 # SYNOPSIS
 #    ./install-Minecraft.sh
