@@ -4,7 +4,7 @@
 #    install-Minecraft.sh - Install Minecraft
 #
 # SYNOPSIS
-#    ./install-Minecraft.sh
+#    ./install-Minecraft.sh [OPTION...]
 #
 # DESCRIPTION
 #    Backs up any existing installation and downloads the JAR file.
@@ -12,11 +12,14 @@
 #    If your Minecraft directory for some reason is not in your home directory,
 #    then modify "home" in minecraft-scripts.conf.
 #
+#    -o
+#        Install old-style (pre-1.6.1) launcher.
+#
 # BUGS
 #    https://github.com/l0b0/minecraft-scripts/issues
 #
 # COPYRIGHT AND LICENSE
-#    Copyright (C) 2011 Victor Engmark
+#    Copyright (C) 2011-2013 Victor Engmark
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -45,9 +48,20 @@ fi
 
 mkdir -p "$home/bin"
 
-wget -O "$startup_jar" "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar"
+if [[ "${1-}" = '-o' ]]
+then
+    # Old launcher
+    launcher_url='https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft.jar'
+    launcher_cmd=(java -Xmx1024M -Xms512M -cp "${startup_jar}" net.minecraft.LauncherFrame)
+else
+    # New launcher
+    launcher_url='https://s3.amazonaws.com/Minecraft.Download/launcher/Minecraft.jar'
+    launcher_cmd=(java -jar "${startup_jar}")
+fi
 
-echo "java -Xmx1024M -Xms512M -cp ${startup_jar} net.minecraft.LauncherFrame" > "$launcher"
+wget -O "$startup_jar" "$launcher_url"
+
+echo "${launcher_cmd[@]}" > "$launcher"
 chmod a+x "$launcher"
 
 sudo ln -fs "$launcher" "$command"
